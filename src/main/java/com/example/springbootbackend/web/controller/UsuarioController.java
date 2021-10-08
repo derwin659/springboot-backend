@@ -22,9 +22,13 @@ public class UsuarioController {
 
     @PostMapping("/usuarios")
 
-    public ResponseEntity<User> postBody(@RequestBody Rut rut, User user) {
+    public ResponseEntity<User> ConsultarRut(@RequestBody Rut rut) {
+        User user=new User();
 
-        if (Validar.validaRut(rut.getRut())) {
+        if(Validar.validaRut(rut.getRut()).equals("")){
+            return new ResponseEntity("El campo no puede estar vacio, por favor escriba su rut , ejemplo:16545678-2", HttpStatus.NO_CONTENT);
+        }
+        else if (Validar.validaRut(rut.getRut())) {
 
             try {
                 Optional<Usuario> datos = usuarioService.ObtenerUno(rut.getRut());
@@ -40,7 +44,7 @@ public class UsuarioController {
 
                     return new ResponseEntity<User>(user, HttpStatus.OK);
                 } else {
-                    return new ResponseEntity<>(HttpStatus.NOT_FOUND);
+                    return new ResponseEntity("El rut que usted ingreso no se encuentra registrado",HttpStatus.NOT_FOUND);
                 }
             } catch (Exception exception) {
 
