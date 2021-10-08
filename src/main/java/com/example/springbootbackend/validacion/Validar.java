@@ -12,7 +12,7 @@ public class Validar {
         Matcher matcher = pattern.matcher(rut);
         if ( matcher.matches() == false ) return false;
         String[] stringRut = rut.split("-");
-        return stringRut[1].toLowerCase().equals(Validar.dv(stringRut[0]));
+        return true;
     }
 
     /**
