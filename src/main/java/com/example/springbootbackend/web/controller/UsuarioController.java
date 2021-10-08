@@ -1,5 +1,6 @@
 package com.example.springbootbackend.web.controller;
 
+import com.example.springbootbackend.Pojo.Rut;
 import com.example.springbootbackend.Pojo.User;
 import com.example.springbootbackend.domain.service.UsuarioService;
 import com.example.springbootbackend.persistence.entity.Usuario;
@@ -21,12 +22,12 @@ public class UsuarioController {
 
     @PostMapping("/usuarios")
 
-    public ResponseEntity<User> postBody(@RequestBody String rut,User user) {
+    public ResponseEntity<User> postBody(@RequestBody Rut rut, User user) {
 
-        if (Validar.validaRut(rut)) {
+        if (Validar.validaRut(rut.getRut())) {
 
             try {
-                Optional<Usuario> datos = usuarioService.ObtenerUno(rut);
+                Optional<Usuario> datos = usuarioService.ObtenerUno(rut.getRut());
 
 
                 if (datos.isPresent()) {
@@ -48,7 +49,7 @@ public class UsuarioController {
             }
 
         } else {
-            return new ResponseEntity(rut, HttpStatus.BAD_REQUEST);
+            return new ResponseEntity("El rut que usted ingreso no esta correcto, por favor intente de nuevo con el siguiente ejemplo:16545678-2", HttpStatus.BAD_REQUEST);
         }
 
     }
